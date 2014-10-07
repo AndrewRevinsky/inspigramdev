@@ -17,7 +17,8 @@ module.exports = function(grunt) {
           files: [
               // includes files within path
               {expand: true, flatten: true, src: ['bower_components/jquery/dist/*'], dest: 'static/libs/jquery/', filter: 'isFile'},
-              {expand: true, flatten: true, src: ['bower_components/underscore/underscore*'], dest: 'static/libs/underscore/', filter: 'isFile'}
+              {expand: true, flatten: true, src: ['bower_components/underscore/underscore*'], dest: 'static/libs/underscore/', filter: 'isFile'},
+              {expand: true, flatten: true, src: ['static/less/*.css'], dest: 'static/css/', filter: 'isFile'}
 
               // includes files within path and its sub-directories
               //{expand: true, src: ['path/**'], dest: 'dest/'},
