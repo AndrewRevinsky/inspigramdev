@@ -16,23 +16,13 @@ $(function(){
 
     //https://api.instagram.com/oauth/authorize/?client_id=7c52051efa014bad915fe9bd29644358&redirect_uri=http://andrewrevinsky.github.io/inspigramdev/redirect.html&response_type=code
 
-    var payload = {
-        "client_id": "7c52051efa014bad915fe9bd29644358",
-        "client_secret": "",
-        "grant_type": "authorization_code",
-        //"WEBSITE URL": "http://andrewrevinsky.github.io/inspigramdev/",
-        "redirect_uri":"http://andrewrevinsky.github.io/inspigramdev/redirect.html",
-        "code" : search.code
-    };
+    if (!search.code) { return self.close(); }
 
-    //var auth = $.post('https://api.instagram.com/oauth/access_token', );
-    var markup = '';
-    $.each(payload, function(k,v){
-       markup += '<input type="hidden" name="'+k+'" value="'+v+'" />';
+    $.getJSON('http://inspigramdev.azurewebsites.net/inspigramauth/end?callback=?', {
+        code: search.code
+    }).then(function(data, resp){
+        debugger;
+        $('<div></div>').appendTo('body').text(data)
     });
-    markup += '<input type="submit" value="Submit" />';
-    $('form').html(markup);
-
-
 
 });

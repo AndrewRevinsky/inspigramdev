@@ -13,5 +13,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "devDependencies": {
+    "underscore": "~1.7.0",
+    "requirejs": "~2.1.15"
+  }
 }
