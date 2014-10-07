@@ -22,7 +22,7 @@ $(function () {
 
         return function () {
             var winPromise = promiseFromSpawnedWindow(window.open('http://inspigramdev.azurewebsites.net/inspigramauth/start',
-                'Instagram Authentication Process', 'menubar=no,location=yes,resizable=yes,scrollbars=no,status=no'));
+                'Instagram Authentication Process', 'menubar=no,location=yes,resizable=yes,scrollbars=no,status=no,width=480,height=320'));
             return winPromise;
         };
 
