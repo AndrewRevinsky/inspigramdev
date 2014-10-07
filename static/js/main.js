@@ -5,7 +5,7 @@ $(function(){
 
     // to avoid direct memory leak through closure
     var events = (function(){
-        var _comm = $('html'); // old versions of jQuery do not support {}.
+        var _comm = $({}); // old versions of jQuery do not support {}.
         return function using(cb){
             try {
                 cb(_comm);
@@ -14,15 +14,21 @@ $(function(){
     })();
 
     var auth = (function(){
-        var winPromise = promiseFromSpawnedWindow(window.open('http://inspigramdev.azurewebsites.net/inspigramauth/start'));
 
-        //return $.Deferred(function(def){
-        //}).promise();
+        return function(){
+            var winPromise = promiseFromSpawnedWindow(window.open('http://inspigramdev.azurewebsites.net/inspigramauth/start',
+                'Instagram Authentication Process', 'menubar=no,location=yes,resizable=yes,scrollbars=no,status=no'));
+            return winPromise;
+        };
+
     })();
 
     function promiseFromSpawnedWindow(win){
         var interval;
         return $.Deferred(function(def){
+
+            if (!win) return def.reject('blocked');
+
             var lastError, lastMessage;
             interval = window.setInterval(function(){
                 try {
@@ -33,11 +39,9 @@ $(function(){
                     }
                 } catch (e) {}
                 try {
-                    debugger;
-                    lastMessage = window.document.body.innerHTML;
+                    lastMessage = win.document.body.innerHTML;
                     lastError = null;
                 } catch (e){
-                    debugger;
                     lastError = e;
                 }
             }, 100);
@@ -76,6 +80,11 @@ $(function(){
     events(function(comm){
         comm.on('login.nspg', function(evt, args){
 
+            auth().done(function(){
+               alert('authed!');
+            });
+
+            return false;
         });
     });
 
