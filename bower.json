@@ -1,0 +1,17 @@
+{
+  "name": "inspigramdev",
+  "version": "0.0.0",
+  "homepage": "https://github.com/AndrewRevinsky/inspigramdev",
+  "authors": [
+    "Andrew Revinsky <arevinsky@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

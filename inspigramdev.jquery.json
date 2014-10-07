@@ -1,0 +1,26 @@
+{
+  "name": "inspigramdev",
+  "title": "Inspigramdev",
+  "description": "Inspigramdev",
+  "version": "0.1.0",
+  "homepage": "https://github.com/AndrewRevinsky/inspigramdev",
+  "author": {
+    "name": "Andrew Revinsky",
+    "email": "arevinsky@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AndrewRevinsky/inspigramdev.git"
+  },
+  "bugs": "https://github.com/AndrewRevinsky/inspigramdev/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/AndrewRevinsky/inspigramdev/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "keywords": []
+}
