@@ -39,8 +39,11 @@ $(function(){
                     }
                 } catch (e) {}
                 try {
-                    lastMessage = win.document.body.innerHTML;
-                    lastError = null;
+                    if (win['response']) {
+                        lastMessage = win['response'];
+                        lastError = null;
+                    }
+
                 } catch (e){
                     lastError = e;
                 }

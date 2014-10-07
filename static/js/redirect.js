@@ -21,8 +21,12 @@ $(function(){
     $.getJSON('http://inspigramdev.azurewebsites.net/inspigramauth/end?callback=?', {
         code: search.code
     }).then(function(data, resp){
-        debugger;
-        $('<div></div>').appendTo('body').text(data)
+        // $('<div></div>').appendTo('body').text(data)
+        window['response'] = data;
+        window.setTimeout(function(){
+            delete window['response'];
+            window.close();
+        }, 150);
     });
 
 });
