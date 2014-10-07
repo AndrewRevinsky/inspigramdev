@@ -38,7 +38,9 @@ $(function () {
             var realUrl = urlBase({
                 endpoint: 'users/' + userId
             });
-            return $.getJSON(realUrl);
+            return $.getJSON(realUrl, {
+                access_token: ctx.token
+            });
         }
     })();
 
@@ -132,7 +134,8 @@ $(function () {
         });
 
         comm.on('logged-in', function(evt, args){
-            ctx.auth = $.Deferred().resolve(args['access_token']).promise();
+            ctx.authPromise = $.Deferred().resolve(args['access_token']).promise();
+            ctx.token = args['access_token'];
         });
 
         comm.on('user-short_data', function(evt, args){
