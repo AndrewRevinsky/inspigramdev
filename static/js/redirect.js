@@ -14,6 +14,8 @@ $(function(){
         return result;
     })(window.location.search);
 
+    //https://api.instagram.com/oauth/authorize/?client_id=7c52051efa014bad915fe9bd29644358&redirect_uri=http://andrewrevinsky.github.io/inspigramdev/redirect.html&response_type=code
+
     var payload = {
         "client_id": "7c52051efa014bad915fe9bd29644358",
         "client_secret": "d6972c67c4be458eb407f3f7d42017c5",
