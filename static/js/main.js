@@ -1,21 +1,26 @@
 /**
  * Created by ANDREW on 10/7/2014.
  */
-$(function(){
+$(function () {
+
+    var ctx = {
+        tpl: {}
+    };
 
     // to avoid direct memory leak through closure
-    var events = (function(){
+    var events = (function () {
         var _comm = $({}); // old versions of jQuery do not support {}.
-        return function using(cb){
+        return function using(cb) {
             try {
                 cb(_comm);
-            } catch (e){}
+            } catch (e) {
+            }
         };
     })();
 
-    var auth = (function(){
+    var auth = (function () {
 
-        return function(){
+        return function () {
             var winPromise = promiseFromSpawnedWindow(window.open('http://inspigramdev.azurewebsites.net/inspigramauth/start',
                 'Instagram Authentication Process', 'menubar=no,location=yes,resizable=yes,scrollbars=no,status=no'));
             return winPromise;
@@ -23,49 +28,58 @@ $(function(){
 
     })();
 
-    function promiseFromSpawnedWindow(win){
+    function promiseFromSpawnedWindow(win) {
         var interval;
-        return $.Deferred(function(def){
+        return $.Deferred(function (def) {
 
             if (!win) return def.reject('blocked');
 
             var lastError, lastMessage;
-            interval = window.setInterval(function(){
+            interval = window.setInterval(function () {
                 try {
                     if (win.closed) {
-                        debugger;
-                        if (lastError) { return def.reject(lastError); }
-                        if (lastMessage) { return def.resolve(lastMessage); }
+                        if (lastError) {
+                            return def.reject(lastError);
+                        }
+                        if (lastMessage) {
+                            return def.resolve(lastMessage);
+                        }
                     }
-                } catch (e) {}
+                } catch (e) {
+                }
                 try {
                     if (win['response']) {
-                        lastMessage = win['response'];
+                        lastMessage = (function () {
+                            try {
+                                return JSON.parse(win['response']);
+                            } catch (e) {
+                                return win['response'];
+                            }
+                        })();
                         lastError = null;
                     }
-
-                } catch (e){
+                } catch (e) {
                     lastError = e;
                 }
             }, 100);
-        }).always(function(){
+        }).always(function () {
             window.clearInterval(interval);
         }).promise();
     }
 
-    $('body').on('click', '[data-action]', function(evt){
+    $('body').on('click', '[data-action]', function (evt) {
         var el = $(evt.currentTarget),
             action = el.data('action'),
             actionValue = el.data(action);
 
         var subEvent;
-        events(function(comm){
+        events(function (comm) {
             comm.trigger((subEvent = new $.Event(action + '.nspg', {
-                'namespace' : 'nspg'
+                'namespace': 'nspg'
             })), {
                 source: el,
                 action: action,
-                value: actionValue
+                value : actionValue
             });
         });
 
@@ -80,16 +94,59 @@ $(function(){
         }
     });
 
-    events(function(comm){
-        comm.on('login.nspg', function(evt, args){
+    events(function (comm) {
+        comm.on('login.nspg', function (evt, args) {
 
-            auth().done(function(){
-               alert('authed!');
+            args.source.css({ 'border': '0 none'});
+
+            auth().then(function (data) {
+
+                comm.trigger('logged-in', {
+                    access_token: data['access_token']
+                });
+
+                comm.trigger('user-short_data', {
+                    user: data['user']
+                });
+
+            }, function(err){
+                alert(err);
+                args.source.css({ 'border': '1px red solid '});
             });
 
             return false;
         });
+
+        comm.on('logged-in', function(evt, args){
+            ctx.auth = $.Deferred().resolve(args['access_token']).promise();
+        });
+
+        comm.on('user-short_data', function(evt, args){
+            getTemplatePromiseOn(ctx.tpl, 'user', 'static/templates/user.tpl.html').done(function(tpl){
+                var markup = tpl(args['user']);
+                $(markup).appendTo('body');
+            }).fail(function(){
+                debugger;
+            });
+
+        });
     });
+
+    function getTemplatePromiseOn(obj, name, ref){
+        var result = obj[name];
+        if (!result || (result.state() == 'rejected')) {
+            result = obj[name] = $.Deferred(function(def){
+                $.get(ref).then(function(text){
+                    try {
+                        return _.template(text);
+                    } catch(e) {
+                        return function(arg){ return text; };
+                    }
+                }).then(def.resolve, def.reject);
+            }).promise();
+        }
+        return result;
+    }
 
 
 });

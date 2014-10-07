@@ -1,0 +1,26 @@
+<div class="b_user">
+    <div class="b_user-row">
+        <div class="b_user-prop_title">Id: </div>
+        <div class="b_user-prop_value"><%= id %></div>
+    </div>
+    <div class="b_user-row">
+        <div class="b_user-prop_title">Username: </div>
+        <div class="b_user-prop_value"><%= username %></div>
+    </div>
+    <div class="b_user-row">
+        <div class="b_user-prop_title">Full Name: </div>
+        <div class="b_user-prop_value"><%= full_name %></div>
+    </div>
+    <div class="b_user-row">
+        <div class="b_user-prop_title">Profile Picture: </div>
+        <div class="b_user-prop_value"><img src="<%= profile_picture %>" alt=""/></div>
+    </div>
+    <div class="b_user-row">
+        <div class="b_user-prop_title">Web Site: </div>
+        <div class="b_user-prop_value"><a href="<%= website || '#' %>"></a></div>
+    </div>
+    <div class="b_user-row">
+        <div class="b_user-prop_title">Bio: </div>
+        <div class="b_user-prop_value"><%= bio %></div>
+    </div>
+</div>
