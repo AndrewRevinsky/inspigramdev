@@ -28,6 +28,20 @@ $(function () {
 
     })();
 
+    var api = (function(){
+        var urlBase = _.template('https://api.instagram.com/v1/<%= endpoint %>?client_id=7c52051efa014bad915fe9bd29644358&callback=?');
+        return {
+            user_basic : getBasicUserInfo
+        };
+
+        function getBasicUserInfo(userId){
+            var realUrl = urlBase({
+                endpoint: 'users/' + userId
+            });
+            return $.getJSON(realUrl);
+        }
+    })();
+
     function promiseFromSpawnedWindow(win) {
         var interval;
         return $.Deferred(function (def) {
@@ -129,6 +143,19 @@ $(function () {
                 debugger;
             });
 
+        });
+
+        comm.on('api-call.nspg', function(evt, args){
+            var vals = args['value'].split('|'),
+                apiName = vals.shift();
+
+            if (!api[apiName]) return;
+
+            api[apiName].apply(api, vals).done(function(data){
+                debugger;
+            });
+
+            return false;
         });
     });
 
