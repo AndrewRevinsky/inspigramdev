@@ -14,9 +14,10 @@
     "test",
     "tests"
   ],
-  "devDependencies": {
+  "dependencies": {
     "underscore": "~1.7.0",
     "requirejs": "~2.1.15",
-    "bacon": "~0.7.23"
+    "bacon": "~0.7.23",
+    "jquery": "~2.1.1"
   }
 }
