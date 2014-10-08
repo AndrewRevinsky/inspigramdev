@@ -1,0 +1,23 @@
+// https://www.google.com/fonts#QuickUsePlace:quickUse/Family:Open+Sans
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:400italic,300,700,400&subset=cyrillic,latin-ext");
+
+.generalFont() {
+    font-family: 'Open Sans', sans-serif;
+}
+.generalFontLight(){
+    .generalFont;
+    font-weight: 300;
+}
+
+.generalFontNormal() {
+    .generalFont;
+    font-weight: 400;
+}
+.generalFontNormalItalic() {
+    .generalFontNormal;
+    font-style: italic;
+}
+.generalFontBold() {
+    .generalFont;
+    font-weight: 700;
+}
