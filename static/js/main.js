@@ -29,6 +29,8 @@ $(function () {
     })();
 
     var api = (function(){
+			// http://instagram.com/developer/clients/manage/?registered=inspigramdev-local
+
         var urlBase = _.template('https://api.instagram.com/v1/<%= endpoint %>?client_id=7c52051efa014bad915fe9bd29644358&callback=?');
         return {
             user_basic : getBasicUserInfo
