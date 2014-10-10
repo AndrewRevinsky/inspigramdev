@@ -21,8 +21,8 @@ $(function () {
     var auth = (function () {
 
         return function () {
-            var winPromise = promiseFromSpawnedWindow(window.open('http://inspigramdev.azurewebsites.net/inspigramauth/start',
-                'Instagram Authentication Process', 'menubar=no,location=yes,resizable=yes,scrollbars=no,status=no,width=480,height=320'));
+            var winPromise = promiseFromSpawnedWindow(window.open('http://inspigramdev.azurewebsites.net/inspigramauth/start?isdev=true',
+                'Instagram Authentication Process', 'menubar=no,location=yes,resizable=yes,scrollbars=no,status=no,width=620,height=485'));
             return winPromise;
         };
 

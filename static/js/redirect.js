@@ -18,7 +18,7 @@ $(function(){
 
     if (!search.code) { return self.close(); }
 
-    $.getJSON('http://inspigramdev.azurewebsites.net/inspigramauth/end?callback=?', {
+    $.getJSON('http://inspigramdev.azurewebsites.net/inspigramauth/end?callback=?&isdev=true', {
         code: search.code
     }).then(function(data, resp){
         // $('<div></div>').appendTo('body').text(data)
